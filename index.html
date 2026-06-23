@@ -36,11 +36,10 @@
     <input type="time" id="horario">
 
     <button class="btn-custom btn-maps" onclick="abrirMaps()">📍 MAPA: SAÍDA CESÁRIO LANGE</button>
-    <p class="instrucao">*Confira os KM no mapa e digite abaixo (Máx: 200km).</p>
+    <p class="instrucao">*Confira os KM no mapa e digite abaixo para calcular.</p>
 
     <label class="label">DISTÂNCIA (KM)</label>
-    <!-- Adicionado max="200" -->
-    <input type="number" id="km" placeholder="0" max="200" oninput="atualizarInterface()">
+    <input type="number" id="km" placeholder="0" oninput="atualizarInterface()">
 
     <div class="display-value" id="resultado">R$ 0,00</div>
 
@@ -59,16 +58,9 @@
 
     function calcular(idaVolta) {
         document.getElementById('tipoViagem').value = idaVolta ? "Ida e Volta" : "Só Ida";
-        let km = parseFloat(document.getElementById('km').value);
+        const km = parseFloat(document.getElementById('km').value);
         const tipo = document.getElementById('tipoServico').value;
         const horario = document.getElementById('horario').value;
-        
-        // Trava de segurança para 200km
-        if (km > 200) { 
-            alert("Atendemos até 200km!"); 
-            document.getElementById('km').value = 200; 
-            km = 200; 
-        }
         
         if (isNaN(km) || km <= 0) { document.getElementById('resultado').innerText = 'R$ 0,00'; return; }
         
