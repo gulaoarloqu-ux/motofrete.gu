@@ -44,21 +44,23 @@
     <h2>Gustavo Motoboy</h2>
 
     <label class="label">TIPO DE SERVIÇO</label>
-    <select id="tipoServico" onchange="calcular(false)">
+    <select id="tipoServico" onchange="atualizarInterface()">
         <option value="produto">Encomenda / Produto</option>
         <option value="passageiro">Passageiro</option>
     </select>
 
     <label class="label">DATA DO AGENDAMENTO</label>
-    <input type="date" id="data" onchange="calcular(false)">
+    <input type="date" id="data">
 
     <label class="label">HORÁRIO</label>
-    <input type="time" id="horario" onchange="calcular(false)">
+    <input type="time" id="horario">
 
     <label class="label">DISTÂNCIA (KM)</label>
-    <input type="number" id="km" placeholder="Até 200 KM" oninput="calcular(false)">
+    <input type="number" id="km" placeholder="Até 200 KM" oninput="atualizarInterface()">
 
     <div class="display-value" id="resultado">R$ 0,00</div>
+
+    <input type="hidden" id="tipoViagem" value="Só Ida">
 
     <button class="btn-custom" onclick="calcular(false)">➜ SÓ IDA</button>
     <button class="btn-custom" onclick="calcular(true)">⇄ IDA E VOLTA</button>
@@ -70,10 +72,11 @@
 </div>
 
 <script>
-    // Inicializa com a data de hoje ao abrir
     document.getElementById('data').valueAsDate = new Date();
 
     function calcular(idaVolta) {
+        document.getElementById('tipoViagem').value = idaVolta ? "Ida e Volta" : "Só Ida";
+        
         const km = parseFloat(document.getElementById('km').value);
         const tipo = document.getElementById('tipoServico').value;
         const horario = document.getElementById('horario').value;
@@ -81,6 +84,7 @@
         if (isNaN(km) || km <= 0) { document.getElementById('resultado').innerText = 'R$ 0,00'; return; }
         
         let valor = 0;
+        const taxaKmExtra = 1.50; // Valor solicitado de 1.50 por KM
         
         if (tipo === 'produto') {
             if (km <= 3) valor = 10;
@@ -90,7 +94,7 @@
             else if (km <= 20) valor = 30;
             else if (km <= 25) valor = 35;
             else if (km <= 30) valor = 45;
-            else valor = 45 + ((km - 30) * 1.5);
+            else valor = 45 + ((km - 30) * taxaKmExtra);
         } else {
             if (km <= 3) valor = 10;
             else if (km <= 5) valor = 12;
@@ -99,10 +103,9 @@
             else if (km <= 20) valor = 40;
             else if (km <= 25) valor = 50;
             else if (km <= 30) valor = 60;
-            else valor = 60 + ((km - 30) * 2.0);
+            else valor = 60 + ((km - 30) * taxaKmExtra);
         }
 
-        // Taxa noturna após as 22h
         if (horario) {
             const hora = parseInt(horario.split(':')[0]);
             if (hora >= 22 || hora < 5) { valor += 10.00; }
@@ -112,17 +115,23 @@
         document.getElementById('resultado').innerText = 'R$ ' + valor.toFixed(2).replace('.', ',');
     }
 
+    function atualizarInterface() {
+        const ehIdaVolta = document.getElementById('tipoViagem').value === "Ida e Volta";
+        calcular(ehIdaVolta);
+    }
+
     function enviarWhatsApp() {
         const valor = document.getElementById('resultado').innerText;
         const km = document.getElementById('km').value;
         const data = document.getElementById('data').value;
         const horario = document.getElementById('horario').value;
-        const tipo = document.getElementById('tipoServico').options[document.getElementById('tipoServico').selectedIndex].text;
+        const tipoServico = document.getElementById('tipoServico').options[document.getElementById('tipoServico').selectedIndex].text;
+        const tipoViagem = document.getElementById('tipoViagem').value;
         
         if (!data || !horario) { alert("Por favor, preencha a DATA e o HORÁRIO!"); return; }
         if (valor === 'R$ 0,00') { alert("Insira os KM primeiro!"); return; }
         
-        window.open(`https://wa.me/5515997959370?text=${encodeURIComponent(`Olá! Quero um serviço: ${tipo}. Data: ${data}. Horário: ${horario}. Distância: ${km} KM. Valor: ${valor}`)}`, '_blank');
+        window.open(`https://wa.me/5515997959370?text=${encodeURIComponent(`Olá! Quero um serviço: ${tipoServico}. Tipo: ${tipoViagem}. Data: ${data}. Horário: ${horario}. Distância: ${km} KM. Valor: ${valor}`)}`, '_blank');
     }
 
     function enviarFeedback() {
