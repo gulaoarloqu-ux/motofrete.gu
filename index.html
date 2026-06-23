@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gustavo Motoboy</title>
+    <style>
+        body { 
+            margin: 0; padding: 0; background: #000;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            background-image: url('https://i.imgur.com/BlVyzFj.png');
+            background-size: cover; background-repeat: no-repeat; background-position: center;
+        }
+
+        .app-interface {
+            width: 260px; padding: 20px;
+            background: rgba(10, 10, 10, 0.85);
+            border-radius: 20px; color: #fff;
+            text-align: center; border: 1px solid #444;
+        }
+
+        h2 { color: #c78f67; font-size: 1.1rem; margin: 0 0 15px 0; }
+        .label { color: #aaa; font-size: 0.7rem; text-align: left; display: block; margin-top: 10px; }
+        
+        select, input, textarea { 
+            width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; 
+            border: 1px solid #444; background: #000; color: #fff; font-size: 1rem; box-sizing: border-box;
+        }
+
+        .display-value { font-size: 2.2rem; font-weight: bold; color: #c78f67; margin: 15px 0; }
+        
+        .btn-custom {
+            width: 100%; padding: 12px; margin-top: 10px; border: none; border-radius: 8px;
+            font-weight: bold; cursor: pointer; color: #331a0a; font-size: 0.8rem; text-transform: uppercase;
+            background: linear-gradient(180deg, #c78f67 0%, #a07251 50%, #7a543b 100%);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.6);
+        }
+        .btn-whatsapp { background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%); color: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="app-interface">
+    <h2>Gustavo Motoboy</h2>
+
+    <label class="label">TIPO DE SERVIÇO</label>
+    <select id="tipoServico" onchange="calcular(false)">
+        <option value="produto">Encomenda / Produto</option>
+        <option value="passageiro">Passageiro</option>
+    </select>
+
+    <label class="label">DATA DO AGENDAMENTO</label>
+    <input type="date" id="data" onchange="calcular(false)">
+
+    <label class="label">HORÁRIO</label>
+    <input type="time" id="horario" onchange="calcular(false)">
+
+    <label class="label">DISTÂNCIA (KM)</label>
+    <input type="number" id="km" placeholder="Até 200 KM" oninput="calcular(false)">
+
+    <div class="display-value" id="resultado">R$ 0,00</div>
+
+    <button class="btn-custom" onclick="calcular(false)">➜ SÓ IDA</button>
+    <button class="btn-custom" onclick="calcular(true)">⇄ IDA E VOLTA</button>
+    <button class="btn-custom btn-whatsapp" onclick="enviarWhatsApp()">WhatsApp ➜</button>
+
+    <label class="label" style="margin-top:20px">DEIXE SEU ELOGIO OU CRÍTICA</label>
+    <textarea id="feedback" rows="2" placeholder="Sua opinião é importante!"></textarea>
+    <button class="btn-custom" style="background: #333; color: white;" onclick="enviarFeedback()">Enviar Feedback ➜</button>
+</div>
+
+<script>
+    // Inicializa com a data de hoje ao abrir
+    document.getElementById('data').valueAsDate = new Date();
+
+    function calcular(idaVolta) {
+        const km = parseFloat(document.getElementById('km').value);
+        const tipo = document.getElementById('tipoServico').value;
+        const horario = document.getElementById('horario').value;
+        
+        if (isNaN(km) || km <= 0) { document.getElementById('resultado').innerText = 'R$ 0,00'; return; }
+        
+        let valor = 0;
+        
+        if (tipo === 'produto') {
+            if (km <= 3) valor = 10;
+            else if (km <= 5) valor = 12;
+            else if (km <= 10) valor = 15;
+            else if (km <= 15) valor = 25;
+            else if (km <= 20) valor = 30;
+            else if (km <= 25) valor = 35;
+            else if (km <= 30) valor = 45;
+            else valor = 45 + ((km - 30) * 1.5);
+        } else {
+            if (km <= 3) valor = 10;
+            else if (km <= 5) valor = 12;
+            else if (km <= 10) valor = 20;
+            else if (km <= 15) valor = 30;
+            else if (km <= 20) valor = 40;
+            else if (km <= 25) valor = 50;
+            else if (km <= 30) valor = 60;
+            else valor = 60 + ((km - 30) * 2.0);
+        }
+
+        // Taxa noturna após as 22h
+        if (horario) {
+            const hora = parseInt(horario.split(':')[0]);
+            if (hora >= 22 || hora < 5) { valor += 10.00; }
+        }
+
+        if (idaVolta) valor += (valor * 0.8);
+        document.getElementById('resultado').innerText = 'R$ ' + valor.toFixed(2).replace('.', ',');
+    }
+
+    function enviarWhatsApp() {
+        const valor = document.getElementById('resultado').innerText;
+        const km = document.getElementById('km').value;
+        const data = document.getElementById('data').value;
+        const horario = document.getElementById('horario').value;
+        const tipo = document.getElementById('tipoServico').options[document.getElementById('tipoServico').selectedIndex].text;
+        
+        if (!data || !horario) { alert("Por favor, preencha a DATA e o HORÁRIO!"); return; }
+        if (valor === 'R$ 0,00') { alert("Insira os KM primeiro!"); return; }
+        
+        window.open(`https://wa.me/5515997959370?text=${encodeURIComponent(`Olá! Quero um serviço: ${tipo}. Data: ${data}. Horário: ${horario}. Distância: ${km} KM. Valor: ${valor}`)}`, '_blank');
+    }
+
+    function enviarFeedback() {
+        const feedback = document.getElementById('feedback').value;
+        if (!feedback) { alert("Escreva algo antes de enviar!"); return; }
+        window.open(`https://wa.me/5515997959370?text=${encodeURIComponent(`Feedback: ${feedback}`)}`, '_blank');
+    }
+</script>
+</body>
+</html>
