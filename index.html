@@ -1,105 +1,403 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gustavo Motoboy</title>
-    <style>
-        body { margin: 0; padding: 0; background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: url('https://i.imgur.com/BlVyzFj.png'); background-size: cover; background-repeat: no-repeat; background-position: center; }
-        .app-interface { width: 260px; padding: 20px; background: rgba(10, 10, 10, 0.9); border-radius: 20px; color: #fff; text-align: center; border: 1px solid #444; }
-        h2 { color: #c78f67; font-size: 1.1rem; margin: 0 0 15px 0; }
-        .label { color: #aaa; font-size: 0.7rem; text-align: left; display: block; margin-top: 10px; font-weight: bold; }
-        .instrucao { color: #c78f67; font-size: 0.65rem; margin-top: 5px; font-style: italic; }
-        select, input, textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #444; background: #000; color: #fff; font-size: 1rem; box-sizing: border-box; }
-        .display-value { font-size: 2.2rem; font-weight: bold; color: #c78f67; margin: 15px 0; }
-        
-        .btn-custom { width: 100%; padding: 12px; margin-top: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: #331a0a; font-size: 0.8rem; text-transform: uppercase; background: linear-gradient(180deg, #c78f67 0%, #a07251 50%, #7a543b 100%); box-shadow: 0 4px 6px rgba(0,0,0,0.6); }
-        .btn-maps { background: linear-gradient(180deg, #c78f67 0%, #a07251 50%, #7a543b 100%); color: #331a0a; margin-bottom: 5px; border: 1px solid #c78f67; }
-        .btn-whatsapp { background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%); color: #fff; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gustavo · Simule sua Corrida</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg: #0b0b0d;
+    --panel: #161618;
+    --panel2: #1e1e21;
+    --orange: #ff8a1e;
+    --orange2: #ffb545;
+    --line: #2c2c30;
+    --text: #f2f0eb;
+    --muted: #9a9a9f;
+    --good: #3ddc84;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(255,138,30,.10), transparent 60%),
+      radial-gradient(900px 500px at 100% 10%, rgba(255,138,30,.06), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding:32px 16px 60px;
+  }
+  .wrap{max-width:560px;margin:0 auto;}
+
+  header{margin-bottom:28px;}
+  .eyebrow{
+    font-family:'Oswald',sans-serif;
+    font-size:12px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--orange2); font-weight:600;
+    display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{content:"";width:18px;height:2px;background:var(--orange);display:inline-block;}
+  h1{
+    font-family:'Oswald',sans-serif;
+    font-weight:700; font-size:clamp(28px,7vw,38px);
+    margin:8px 0 4px; letter-spacing:.01em;
+    background:linear-gradient(90deg,#fff,var(--orange2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{color:var(--muted); font-size:14px; line-height:1.5;}
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:16px;
+  }
+  .card h2{
+    font-family:'Oswald',sans-serif;
+    font-size:13px; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--orange2); margin:0 0 16px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .card h2 .n{
+    width:20px;height:20px;border-radius:50%;
+    background:var(--orange); color:#1a1200;
+    font-size:11px; display:flex; align-items:center; justify-content:center;
+    font-weight:700; flex-shrink:0;
+  }
+
+  .row{display:flex; gap:12px; margin-bottom:14px;}
+  .row:last-child{margin-bottom:0;}
+  .field{flex:1;}
+  label{
+    display:block; font-size:12.5px; color:var(--muted); margin-bottom:6px;
+    font-weight:500;
+  }
+  input[type=text], input[type=number]{
+    width:100%; background:var(--panel2); border:1px solid var(--line);
+    color:var(--text); border-radius:9px; padding:11px 12px;
+    font-size:15px; font-family:'Inter',sans-serif; font-weight:600;
+    -moz-appearance:textfield;
+  }
+  input:focus{outline:none; border-color:var(--orange);}
+  .hint{font-size:11px; color:var(--muted); margin-top:5px;}
+
+  .fixed-box{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--panel2); border:1px solid var(--line); border-radius:9px;
+    padding:11px 12px; font-size:15px; font-weight:600; color:var(--text);
+  }
+  .fixed-box small{display:block; font-size:11px; color:var(--muted); font-weight:500; margin-top:2px;}
+
+  .seg-control{
+    display:flex; background:var(--panel2); border:1px solid var(--line);
+    border-radius:10px; padding:4px; margin-bottom:16px; gap:4px;
+  }
+  .seg-btn{
+    flex:1; background:transparent; border:none; color:var(--muted);
+    font-family:'Inter',sans-serif; font-weight:600; font-size:14px;
+    padding:10px 12px; border-radius:8px; cursor:pointer;
+    transition:background .15s, color .15s;
+  }
+  .seg-btn.active{background:var(--orange); color:#1a1200;}
+
+  .toggle-list{display:flex; flex-direction:column; gap:10px;}
+  .toggle{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--panel2); border:1px solid var(--line);
+    border-radius:10px; padding:12px 14px; cursor:pointer;
+    transition:border-color .15s;
+  }
+  .toggle.active{border-color:var(--orange);}
+  .toggle-label{font-size:14px; font-weight:600;}
+  .toggle-desc{font-size:11.5px; color:var(--muted); margin-top:2px;}
+  .switch{
+    width:42px;height:24px;border-radius:99px;background:#33333a;
+    position:relative; flex-shrink:0; transition:background .15s; margin-left:12px;
+  }
+  .switch::after{
+    content:""; position:absolute; top:2px; left:2px;
+    width:20px;height:20px;border-radius:50%;background:#fff;
+    transition:transform .15s;
+  }
+  .toggle.active .switch{background:var(--orange);}
+  .toggle.active .switch::after{transform:translateX(18px);}
+
+  .total-card{
+    background:linear-gradient(155deg,#2a1a08,#171114 60%);
+    border:1px solid #4a2e0f;
+    border-radius:14px; padding:22px; margin-top:20px;
+    position:relative; overflow:hidden;
+  }
+  .total-card::before{
+    content:""; position:absolute; inset:0;
+    background:repeating-linear-gradient(115deg, rgba(255,138,30,.05) 0 2px, transparent 2px 14px);
+    pointer-events:none;
+  }
+  .total-label{font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--orange2); font-weight:600;}
+  .total-value{
+    font-family:'Oswald',sans-serif; font-weight:700;
+    font-size:clamp(38px,11vw,52px); color:#fff; line-height:1.1; margin:6px 0 2px;
+  }
+  .total-range{color:var(--muted); font-size:13px; margin-bottom:14px;}
+
+  .breakdown{border-top:1px solid #3a2716; padding-top:14px; margin-top:8px;}
+  .bd-row{display:flex; justify-content:space-between; font-size:13.5px; padding:5px 0; color:#d8d3ca;}
+  .bd-row.sub{color:var(--muted); font-size:12.5px;}
+  .bd-row b{color:#fff;}
+  .bd-row.mult{color:var(--orange2);}
+
+  .msg-box{
+    margin-top:16px; background:var(--panel2); border:1px dashed var(--line);
+    border-radius:10px; padding:14px; font-size:13.5px; line-height:1.6;
+    color:#dcdad3; white-space:pre-wrap; font-family:'Inter',sans-serif;
+  }
+  .action-btn{
+    margin-top:10px; width:100%; background:var(--orange); color:#1a1200;
+    border:none; border-radius:9px; padding:12px; font-weight:700;
+    font-size:14px; cursor:pointer; font-family:'Inter',sans-serif;
+    transition:background .15s;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .action-btn:hover{background:var(--orange2);}
+  .action-btn.copied{background:var(--good); color:#06210f;}
+  .action-btn.whats{background:var(--good); color:#06210f;}
+  .action-btn.whats:hover{background:#4ff09a;}
+
+  footer{text-align:center; color:var(--muted); font-size:12px; margin-top:24px;}
+</style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="app-interface">
-    <h2>Gustavo Motoboy</h2>
+  <header>
+    <div class="eyebrow">Gustavo · Serviços de Transporte</div>
+    <h1>Simule sua Corrida</h1>
+    <div class="sub">Preencha os dados abaixo pra ver uma estimativa de preço na hora. Depois é só enviar o pedido pelo WhatsApp.</div>
+  </header>
 
-    <label class="label">TIPO DE SERVIÇO</label>
-    <select id="tipoServico" onchange="atualizarInterface()">
-        <option value="produto">Encomenda / Produto</option>
-        <option value="passageiro">Passageiro</option>
-    </select>
+  <div class="card">
+    <h2><span class="n">1</span>Sua corrida</h2>
+    <div class="seg-control" id="segTipo">
+      <button type="button" class="seg-btn active" data-tipo="motoboy">Motoboy (entrega)</button>
+      <button type="button" class="seg-btn" data-tipo="motoTaxi">Moto Táxi (passageiro)</button>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Origem</label>
+        <div class="fixed-box">Cesário Lange<small>Ponto de partida fixo</small></div>
+      </div>
+      <div class="field">
+        <label for="destino">Para onde você quer ir?</label>
+        <input type="text" id="destino" value="" placeholder="Ex: Tatuí">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="nome" id="nomeLabel">Seu nome</label>
+        <input type="text" id="nome" value="" placeholder="Digite seu nome">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="distIda">Distância só de ida (km)</label>
+        <input type="number" id="distIda" value="" min="0" step="0.5" placeholder="Ex: 25">
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <div class="toggle active" id="toggleIdaVolta" style="padding:11px 12px;">
+          <div>
+            <div class="toggle-label" style="font-size:13px;">Ida e volta</div>
+          </div>
+          <div class="switch"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hint">Não sabe a distância certa? Coloque uma estimativa — Gustavo confirma o valor final com você.</div>
+  </div>
 
-    <label class="label">📅 DATA DO AGENDAMENTO</label>
-    <input type="date" id="data">
+  <div class="card">
+    <h2><span class="n">2</span>Opções da corrida</h2>
+    <div class="toggle-list">
+      <div class="toggle" data-add="doc" data-pct="20">
+        <div>
+          <div class="toggle-label">É documento</div>
+          <div class="toggle-desc">Entrega de documento/objeto de responsabilidade maior</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+      <div class="toggle" data-add="urgente" data-pct="30">
+        <div>
+          <div class="toggle-label">Urgente (hoje / até 2h)</div>
+          <div class="toggle-desc">Preciso com prioridade</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+      <div class="toggle" data-add="horario" data-pct="20">
+        <div>
+          <div class="toggle-label">Depois das 18h ou domingo</div>
+          <div class="toggle-desc">Fora do horário comum</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+      <div class="toggle" data-add="chuva" data-pct="20">
+        <div>
+          <div class="toggle-label">Está chovendo</div>
+          <div class="toggle-desc">Risco e desconforto extra na viagem</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:14px;">
+      <div class="field">
+        <label for="pedagio">Tem pedágio ou estacionamento? (R$, se souber)</label>
+        <input type="number" id="pedagio" value="0" min="0" step="1">
+      </div>
+    </div>
+    <div class="hint">Pedágio e estacionamento são repassados sem acréscimo, direto pro valor da corrida.</div>
+  </div>
 
-    <label class="label">⏰ HORÁRIO</label>
-    <input type="time" id="horario">
+  <div class="total-card">
+    <div class="total-label">Estimativa de valor</div>
+    <div class="total-value" id="totalValue">R$ 0</div>
+    <div class="total-range" id="totalRange">Faixa justa: R$0 – R$0</div>
 
-    <button class="btn-custom btn-maps" onclick="abrirMaps()">📍 MAPA: SAÍDA CESÁRIO LANGE</button>
-    <p class="instrucao">*Confira os KM no mapa e digite abaixo para calcular.</p>
+    <div class="breakdown" id="breakdown"></div>
 
-    <label class="label">DISTÂNCIA (KM)</label>
-    <input type="number" id="km" placeholder="0" oninput="atualizarInterface()">
+    <div class="msg-box" id="msgBox"></div>
+    <button class="action-btn" id="copyBtn">Copiar mensagem</button>
+    <button class="action-btn whats" id="whatsBtn">Enviar pedido pelo WhatsApp</button>
+  </div>
 
-    <div class="display-value" id="resultado">R$ 0,00</div>
-
-    <input type="hidden" id="tipoViagem" value="Só Ida">
-    <button class="btn-custom" onclick="calcular(false)">➜ SÓ IDA</button>
-    <button class="btn-custom" onclick="calcular(true)">⇄ IDA E VOLTA</button>
-    <button class="btn-custom btn-whatsapp" onclick="enviarWhatsApp()">WhatsApp ➜</button>
+  <footer>Gustavo Serviços de Transporte · Cesário Lange e região<br>Valores estimados. Confirmação final é feita diretamente com Gustavo.</footer>
 </div>
 
 <script>
-    document.getElementById('data').valueAsDate = new Date();
+const $ = id => document.getElementById(id);
+const fmt = v => v.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:2});
+const WHATSAPP_NUMERO = '5515997959370';
 
-    function abrirMaps() {
-        window.open('https://www.google.com/maps/dir/Cesário+Lange+-+SP/', '_blank');
+// ===== Tarifas fixas do Gustavo (o cliente não pode alterar) =====
+const TAXA_BASE = 20;
+const TAXA_KM = 2;
+const ESPERA_MIN = 30;
+const VALOR_HORA_ESPERA = 15;
+
+// tipo de serviço
+let tipoServico = 'motoboy';
+const segButtons = document.querySelectorAll('.seg-btn');
+segButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    segButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    tipoServico = btn.dataset.tipo;
+    $('nomeLabel').textContent = tipoServico === 'motoTaxi' ? 'Seu nome (passageiro)' : 'Seu nome';
+    calc();
+  });
+});
+
+// ida e volta toggle
+const idaVoltaToggle = $('toggleIdaVolta');
+let idaVolta = true;
+idaVoltaToggle.addEventListener('click', ()=>{
+  idaVolta = !idaVolta;
+  idaVoltaToggle.classList.toggle('active', idaVolta);
+  idaVoltaToggle.querySelector('.toggle-label').textContent = idaVolta ? 'Ida e volta' : 'Só ida';
+  calc();
+});
+
+// additional toggles
+const addToggles = document.querySelectorAll('.toggle[data-add]');
+addToggles.forEach(t=>{
+  t.addEventListener('click', ()=>{
+    t.classList.toggle('active');
+    calc();
+  });
+});
+
+const inputs = ['distIda','pedagio','destino','nome'];
+inputs.forEach(id => $(id).addEventListener('input', calc));
+
+let last = {};
+
+function calc(){
+  const distIda = parseFloat($('distIda').value) || 0;
+  const distTotal = idaVolta ? distIda*2 : distIda;
+  const pedagio = parseFloat($('pedagio').value) || 0;
+
+  const kmValor = distTotal * TAXA_KM;
+  const esperaValor = (ESPERA_MIN/60) * VALOR_HORA_ESPERA;
+  const subtotal = TAXA_BASE + kmValor + esperaValor;
+
+  let pct = 0;
+  let activeLabels = [];
+  addToggles.forEach(t=>{
+    if(t.classList.contains('active')){
+      pct += parseFloat(t.dataset.pct);
+      activeLabels.push({name:t.querySelector('.toggle-label').textContent, pct:t.dataset.pct});
     }
+  });
 
-    function calcular(idaVolta) {
-        document.getElementById('tipoViagem').value = idaVolta ? "Ida e Volta" : "Só Ida";
-        const km = parseFloat(document.getElementById('km').value);
-        const tipo = document.getElementById('tipoServico').value;
-        const horario = document.getElementById('horario').value;
-        
-        if (isNaN(km) || km <= 0) { document.getElementById('resultado').innerText = 'R$ 0,00'; return; }
-        
-        let valor = 0;
-        const taxaKmExtra = 1.50; 
-        
-        if (tipo === 'produto') {
-            if (km <= 3) valor = 10; else if (km <= 5) valor = 12; else if (km <= 10) valor = 15; else if (km <= 15) valor = 25; else if (km <= 20) valor = 30; else if (km <= 25) valor = 35; else if (km <= 30) valor = 45; else valor = 45 + ((km - 30) * taxaKmExtra);
-        } else {
-            if (km <= 3) valor = 10; else if (km <= 5) valor = 12; else if (km <= 10) valor = 20; else if (km <= 15) valor = 30; else if (km <= 20) valor = 40; else if (km <= 25) valor = 50; else if (km <= 30) valor = 60; else valor = 60 + ((km - 30) * taxaKmExtra);
-        }
+  const multiplicado = subtotal * (1 + pct/100);
+  const total = multiplicado + pedagio;
+  const totalMin = total*0.95;
+  const totalMax = total*1.10;
 
-        if (horario) {
-            const hora = parseInt(horario.split(':')[0]);
-            if (hora >= 22 || hora < 5) valor += 10.00;
-        }
+  $('totalValue').textContent = 'R$ ' + fmt(total);
+  $('totalRange').textContent = `Faixa justa: R$ ${fmt(totalMin)} – R$ ${fmt(totalMax)}`;
 
-        if (idaVolta) valor += (valor * 0.8);
-        document.getElementById('resultado').innerText = 'R$ ' + valor.toFixed(2).replace('.', ',');
-    }
+  let bd = `
+    <div class="bd-row"><span>Taxa base</span><b>R$ ${fmt(TAXA_BASE)}</b></div>
+    <div class="bd-row sub"><span>${distTotal.toFixed(1)} km</span><b>R$ ${fmt(kmValor)}</b></div>
+    <div class="bd-row sub"><span>Tempo de espera incluso</span><b>R$ ${fmt(esperaValor)}</b></div>
+    <div class="bd-row"><span>Subtotal</span><b>R$ ${fmt(subtotal)}</b></div>
+  `;
+  activeLabels.forEach(a=>{
+    bd += `<div class="bd-row mult"><span>${a.name}</span><b>+${a.pct}%</b></div>`;
+  });
+  if(pedagio>0){
+    bd += `<div class="bd-row"><span>Pedágio/estacionamento</span><b>R$ ${fmt(pedagio)}</b></div>`;
+  }
+  $('breakdown').innerHTML = bd;
 
-    function atualizarInterface() {
-        const ehIdaVolta = document.getElementById('tipoViagem').value === "Ida e Volta";
-        calcular(ehIdaVolta);
-    }
+  // mensagem pro Gustavo
+  const destino = $('destino').value.trim() || '(destino a definir)';
+  const nome = $('nome').value.trim();
+  let motivo = idaVolta ? 'ida e volta' : 'só ida';
+  let extras = activeLabels.map(a=>a.name.toLowerCase()).join(', ');
+  const isTaxi = tipoServico === 'motoTaxi';
 
-    function enviarWhatsApp() {
-        const valor = document.getElementById('resultado').innerText;
-        const km = document.getElementById('km').value;
-        const data = document.getElementById('data').value;
-        const horario = document.getElementById('horario').value;
-        const tipoServico = document.getElementById('tipoServico').options[document.getElementById('tipoServico').selectedIndex].text;
-        const tipoViagem = document.getElementById('tipoViagem').value;
-        
-        if (!data || !horario) { alert("Preencha DATA e HORÁRIO!"); return; }
-        if (valor === 'R$ 0,00') { alert("Insira os KM!"); return; }
-        
-        window.open(`https://wa.me/5515997959370?text=${encodeURIComponent(`Olá! Quero um serviço: ${tipoServico}. Tipo: ${tipoViagem}. Data: ${data}. Horário: ${horario}. Distância: ${km} KM. Valor: ${valor}`)}`, '_blank');
-    }
+  let msg = `Olá Gustavo! ${nome ? 'Meu nome é ' + nome + '. ' : ''}`;
+  msg += isTaxi
+    ? `Gostaria de uma corrida de passageiro de Cesário Lange até ${destino}, ${distIda || '?'} km (${motivo}).`
+    : `Gostaria de solicitar uma entrega de Cesário Lange até ${destino}, ${distIda || '?'} km (${motivo}).`;
+  if(extras) msg += ` Opções: ${extras}.`;
+  if(pedagio>0) msg += ` Tem pedágio/estacionamento de aproximadamente R$ ${fmt(pedagio)}.`;
+  msg += ` Valor estimado: R$ ${fmt(total)} (faixa R$ ${fmt(totalMin)} – R$ ${fmt(totalMax)}). Pode confirmar?`;
+  $('msgBox').textContent = msg;
+
+  last = { total, msg };
+}
+
+$('copyBtn').addEventListener('click', ()=>{
+  navigator.clipboard.writeText($('msgBox').textContent).then(()=>{
+    const btn = $('copyBtn');
+    const original = btn.textContent;
+    btn.textContent = 'Copiado ✓';
+    btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent = original; btn.classList.remove('copied'); }, 1800);
+  });
+});
+
+$('whatsBtn').addEventListener('click', ()=>{
+  const texto = encodeURIComponent($('msgBox').textContent);
+  window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${texto}`, '_blank');
+});
+
+calc();
 </script>
 </body>
 </html>
