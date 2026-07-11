@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gustavo · Simule sua Corrida</title>
+<title>Gustavo · Peça seu Orçamento</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -76,21 +76,14 @@
     display:block; font-size:12.5px; color:var(--muted); margin-bottom:6px;
     font-weight:500;
   }
-  input[type=text], input[type=number]{
+  input[type=number], input[type=text]{
     width:100%; background:var(--panel2); border:1px solid var(--line);
     color:var(--text); border-radius:9px; padding:11px 12px;
-    font-size:15px; font-family:'Inter',sans-serif; font-weight:600;
+    font-size:16px; font-family:'Inter',sans-serif; font-weight:600;
     -moz-appearance:textfield;
   }
   input:focus{outline:none; border-color:var(--orange);}
   .hint{font-size:11px; color:var(--muted); margin-top:5px;}
-
-  .fixed-box{
-    display:flex; align-items:center; justify-content:space-between;
-    background:var(--panel2); border:1px solid var(--line); border-radius:9px;
-    padding:11px 12px; font-size:15px; font-weight:600; color:var(--text);
-  }
-  .fixed-box small{display:block; font-size:11px; color:var(--muted); font-weight:500; margin-top:2px;}
 
   .seg-control{
     display:flex; background:var(--panel2); border:1px solid var(--line);
@@ -148,26 +141,37 @@
   .bd-row{display:flex; justify-content:space-between; font-size:13.5px; padding:5px 0; color:#d8d3ca;}
   .bd-row.sub{color:var(--muted); font-size:12.5px;}
   .bd-row b{color:#fff;}
-  .bd-row.mult{color:var(--orange2);}
 
-  .msg-box{
-    margin-top:16px; background:var(--panel2); border:1px dashed var(--line);
-    border-radius:10px; padding:14px; font-size:13.5px; line-height:1.6;
-    color:#dcdad3; white-space:pre-wrap; font-family:'Inter',sans-serif;
+  .disclaimer{
+    margin-top:16px; background:rgba(255,138,30,.07); border:1px dashed #4a2e0f;
+    border-radius:10px; padding:12px 14px; font-size:12px; line-height:1.6; color:#d8c9b0;
   }
-  .action-btn{
-    margin-top:10px; width:100%; background:var(--orange); color:#1a1200;
-    border:none; border-radius:9px; padding:12px; font-weight:700;
-    font-size:14px; cursor:pointer; font-family:'Inter',sans-serif;
-    transition:background .15s;
-    display:flex; align-items:center; justify-content:center; gap:8px;
+
+  .wa-btn{
+    margin-top:14px; width:100%; background:var(--good); color:#06210f;
+    border:none; border-radius:9px; padding:14px; font-weight:700;
+    font-size:15px; cursor:pointer; font-family:'Inter',sans-serif;
+    transition:background .15s; display:flex; align-items:center; justify-content:center; gap:8px;
+    text-decoration:none;
   }
-  .action-btn:hover{background:var(--orange2);}
-  .action-btn.copied{background:var(--good); color:#06210f;}
-  .action-btn.whats{background:var(--good); color:#06210f;}
-  .action-btn.whats:hover{background:#4ff09a;}
+  .wa-btn:hover{background:#5ee89c;}
 
   footer{text-align:center; color:var(--muted); font-size:12px; margin-top:24px;}
+
+  .price-card{margin-bottom:16px;}
+  .price-card h2{font-size:15px;}
+  .price-group{margin-bottom:20px;}
+  .price-group:last-child{margin-bottom:0;}
+  .price-group-title{
+    font-family:'Oswald',sans-serif; font-weight:600; font-size:14.5px;
+    color:var(--orange2); margin-bottom:10px; display:flex; align-items:center; gap:6px;
+  }
+  .price-line{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:13.5px; padding:7px 0; border-bottom:1px solid var(--line); color:#d8d3ca;
+  }
+  .price-line:last-of-type{border-bottom:none;}
+  .price-line b{color:#fff; font-family:'Oswald',sans-serif; font-weight:600; font-size:14.5px;}
 </style>
 </head>
 <body>
@@ -175,118 +179,114 @@
 
   <header>
     <div class="eyebrow">Gustavo · Serviços de Transporte</div>
-    <h1>Simule sua Corrida</h1>
-    <div class="sub">Preencha os dados abaixo pra ver uma estimativa de preço na hora. Depois é só enviar o pedido pelo WhatsApp.</div>
+    <h1>Peça seu Orçamento</h1>
+    <div class="sub">Preencha os dados da sua corrida e veja o valor estimado na hora. Depois é só enviar pra Gustavo pelo WhatsApp pra confirmar.</div>
   </header>
+
+  <div class="card price-card">
+    <h2>💰&nbsp;Tabela de Preços</h2>
+    <div class="price-group">
+      <div class="price-group-title">🏍️ Motoboy</div>
+      <div class="price-line"><span>Taxa mínima · até 10 km</span><b>R$ 30,00</b></div>
+      <div class="price-line"><span>Acima de 10 km</span><b>R$ 2,00/km</b></div>
+    </div>
+    <div class="price-group" style="margin-bottom:0;">
+      <div class="price-group-title">🛵 Moto Táxi</div>
+      <div class="price-line"><span>Até 5 km</span><b>R$ 20,00</b></div>
+      <div class="price-line"><span>De 6 a 10 km</span><b>R$ 30,00</b></div>
+      <div class="price-line"><span>Acima de 10 km</span><b>R$ 2,00/km</b></div>
+    </div>
+  </div>
 
   <div class="card">
     <h2><span class="n">1</span>Sua corrida</h2>
     <div class="seg-control" id="segTipo">
-      <button type="button" class="seg-btn active" data-tipo="motoboy">Motoboy (entrega)</button>
-      <button type="button" class="seg-btn" data-tipo="motoTaxi">Moto Táxi (passageiro)</button>
+      <button type="button" class="seg-btn active" data-tipo="motoboy">Motoboy</button>
+      <button type="button" class="seg-btn" data-tipo="motoTaxi">Moto Táxi</button>
     </div>
     <div class="row">
       <div class="field">
-        <label>Origem</label>
-        <div class="fixed-box">Cesário Lange<small>Ponto de partida fixo</small></div>
+        <label for="origem">Origem</label>
+        <input type="text" id="origem" placeholder="Endereço de saída">
       </div>
       <div class="field">
-        <label for="destino">Para onde você quer ir?</label>
-        <input type="text" id="destino" value="" placeholder="Ex: Tatuí">
+        <label for="destino">Destino</label>
+        <input type="text" id="destino" placeholder="Endereço de chegada">
       </div>
     </div>
     <div class="row">
       <div class="field">
-        <label for="nome" id="nomeLabel">Seu nome</label>
-        <input type="text" id="nome" value="" placeholder="Digite seu nome">
+        <label for="nome">Seu nome (opcional)</label>
+        <input type="text" id="nome" placeholder="Como podemos te chamar">
       </div>
     </div>
     <div class="row">
       <div class="field">
         <label for="distIda">Distância só de ida (km)</label>
-        <input type="number" id="distIda" value="" min="0" step="0.5" placeholder="Ex: 25">
+        <input type="number" id="distIda" value="5" min="0" step="0.5">
       </div>
       <div class="field">
         <label>&nbsp;</label>
-        <div class="toggle active" id="toggleIdaVolta" style="padding:11px 12px;">
-          <div>
-            <div class="toggle-label" style="font-size:13px;">Ida e volta</div>
-          </div>
+        <div class="toggle" id="toggleIdaVolta" style="padding:11px 12px;">
+          <div><div class="toggle-label" style="font-size:13px;">Ida e volta</div></div>
           <div class="switch"></div>
         </div>
       </div>
     </div>
-    <div class="hint">Não sabe a distância certa? Coloque uma estimativa — Gustavo confirma o valor final com você.</div>
+    <div class="hint">Não sabe a distância exata? Dá uma olhada no mapa do celular — o valor final é sempre confirmado por Gustavo antes de começar.</div>
   </div>
 
   <div class="card">
-    <h2><span class="n">2</span>Opções da corrida</h2>
-    <div class="toggle-list">
-      <div class="toggle" data-add="doc" data-pct="20">
-        <div>
-          <div class="toggle-label">É documento</div>
-          <div class="toggle-desc">Entrega de documento/objeto de responsabilidade maior</div>
-        </div>
-        <div class="switch"></div>
-      </div>
-      <div class="toggle" data-add="urgente" data-pct="30">
-        <div>
-          <div class="toggle-label">Urgente (hoje / até 2h)</div>
-          <div class="toggle-desc">Preciso com prioridade</div>
-        </div>
-        <div class="switch"></div>
-      </div>
-      <div class="toggle" data-add="horario" data-pct="20">
-        <div>
-          <div class="toggle-label">Depois das 18h ou domingo</div>
-          <div class="toggle-desc">Fora do horário comum</div>
-        </div>
-        <div class="switch"></div>
-      </div>
-      <div class="toggle" data-add="chuva" data-pct="20">
-        <div>
-          <div class="toggle-label">Está chovendo</div>
-          <div class="toggle-desc">Risco e desconforto extra na viagem</div>
-        </div>
-        <div class="switch"></div>
-      </div>
-    </div>
-    <div class="row" style="margin-top:14px;">
+    <h2><span class="n">2</span>Detalhes extras</h2>
+    <div class="row">
       <div class="field">
-        <label for="pedagio">Tem pedágio ou estacionamento? (R$, se souber)</label>
+        <label for="esperaMin">Tempo de espera previsto (minutos)</label>
+        <input type="number" id="esperaMin" value="0" min="0" step="5">
+      </div>
+      <div class="field">
+        <label for="pedagio">Pedágio / estacionamento (R$)</label>
         <input type="number" id="pedagio" value="0" min="0" step="1">
       </div>
     </div>
-    <div class="hint">Pedágio e estacionamento são repassados sem acréscimo, direto pro valor da corrida.</div>
+    <div class="hint" style="margin-bottom:14px;">Espera: R$ 20,00 por hora (cobrança proporcional). Pedágio e estacionamento entram à parte, sem multiplicador.</div>
+    <div class="toggle-list">
+      <div class="toggle" id="toggleHorario">
+        <div>
+          <div class="toggle-label">Horário noturno, domingo ou feriado</div>
+          <div class="toggle-desc">Pode ter acréscimo — confirmado por Gustavo</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+      <div class="toggle" id="toggleVolume">
+        <div>
+          <div class="toggle-label">Volume grande, pesado ou frágil</div>
+          <div class="toggle-desc">Orçado separadamente por Gustavo</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+    </div>
   </div>
 
   <div class="total-card">
-    <div class="total-label">Estimativa de valor</div>
+    <div class="total-label">Valor estimado</div>
     <div class="total-value" id="totalValue">R$ 0</div>
-    <div class="total-range" id="totalRange">Faixa justa: R$0 – R$0</div>
+    <div class="total-range" id="totalRange"></div>
 
     <div class="breakdown" id="breakdown"></div>
 
-    <div class="msg-box" id="msgBox"></div>
-    <button class="action-btn" id="copyBtn">Copiar mensagem</button>
-    <button class="action-btn whats" id="whatsBtn">Enviar pedido pelo WhatsApp</button>
+    <div class="disclaimer" id="disclaimer">Este valor é uma estimativa com base na tabela de preços. O valor final é sempre confirmado por Gustavo antes do início da corrida.</div>
+
+    <a class="wa-btn" id="waBtn" href="#" target="_blank" rel="noopener">📲 Enviar orçamento pelo WhatsApp</a>
   </div>
 
-  <footer>Gustavo Serviços de Transporte · Cesário Lange e região<br>Valores estimados. Confirmação final é feita diretamente com Gustavo.</footer>
+  <footer>Gustavo Serviços de Transporte · Cesário Lange e região<br>(15) 99795-9370</footer>
 </div>
 
 <script>
 const $ = id => document.getElementById(id);
-const fmt = v => v.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:2});
-const WHATSAPP_NUMERO = '5515997959370';
+const fmt = v => v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const WHATSAPP_NUMBER = '5515997959370';
 
-// ===== Tarifas fixas do Gustavo (o cliente não pode alterar) =====
-const TAXA_BASE = 0;
-const TAXA_KM = 2;
-const ESPERA_MIN = 30;
-const VALOR_HORA_ESPERA = 15;
-
-// tipo de serviço
 let tipoServico = 'motoboy';
 const segButtons = document.querySelectorAll('.seg-btn');
 segButtons.forEach(btn=>{
@@ -294,14 +294,12 @@ segButtons.forEach(btn=>{
     segButtons.forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     tipoServico = btn.dataset.tipo;
-    $('nomeLabel').textContent = tipoServico === 'motoTaxi' ? 'Seu nome (passageiro)' : 'Seu nome';
     calc();
   });
 });
 
-// ida e volta toggle
+let idaVolta = false;
 const idaVoltaToggle = $('toggleIdaVolta');
-let idaVolta = true;
 idaVoltaToggle.addEventListener('click', ()=>{
   idaVolta = !idaVolta;
   idaVoltaToggle.classList.toggle('active', idaVolta);
@@ -309,93 +307,84 @@ idaVoltaToggle.addEventListener('click', ()=>{
   calc();
 });
 
-// additional toggles
-const addToggles = document.querySelectorAll('.toggle[data-add]');
-addToggles.forEach(t=>{
-  t.addEventListener('click', ()=>{
-    t.classList.toggle('active');
-    calc();
-  });
+let horarioEspecial = false;
+const toggleHorario = $('toggleHorario');
+toggleHorario.addEventListener('click', ()=>{
+  horarioEspecial = !horarioEspecial;
+  toggleHorario.classList.toggle('active', horarioEspecial);
+  calc();
 });
 
-const inputs = ['distIda','pedagio','destino','nome'];
+let volumeGrande = false;
+const toggleVolume = $('toggleVolume');
+toggleVolume.addEventListener('click', ()=>{
+  volumeGrande = !volumeGrande;
+  toggleVolume.classList.toggle('active', volumeGrande);
+  calc();
+});
+
+const inputs = ['distIda','esperaMin','pedagio','origem','destino','nome'];
 inputs.forEach(id => $(id).addEventListener('input', calc));
 
-let last = {};
+function precoBase(distTotal){
+  if(tipoServico === 'motoTaxi'){
+    if(distTotal <= 5) return 20;
+    if(distTotal <= 10) return 30;
+    return distTotal*2;
+  }
+  return distTotal <= 10 ? 30 : distTotal*2;
+}
 
 function calc(){
   const distIda = parseFloat($('distIda').value) || 0;
   const distTotal = idaVolta ? distIda*2 : distIda;
+  const esperaMin = parseFloat($('esperaMin').value) || 0;
   const pedagio = parseFloat($('pedagio').value) || 0;
 
-  const kmValor = distTotal * TAXA_KM;
-  const esperaValor = (ESPERA_MIN/60) * VALOR_HORA_ESPERA;
-  const subtotal = TAXA_BASE + kmValor + esperaValor;
-
-  let pct = 0;
-  let activeLabels = [];
-  addToggles.forEach(t=>{
-    if(t.classList.contains('active')){
-      pct += parseFloat(t.dataset.pct);
-      activeLabels.push({name:t.querySelector('.toggle-label').textContent, pct:t.dataset.pct});
-    }
-  });
-
-  const multiplicado = subtotal * (1 + pct/100);
-  const total = multiplicado + pedagio;
-  const totalMin = total*0.95;
-  const totalMax = total*1.10;
+  const base = precoBase(distTotal);
+  const esperaValor = (esperaMin/60) * 20;
+  const total = base + esperaValor + pedagio;
 
   $('totalValue').textContent = 'R$ ' + fmt(total);
-  $('totalRange').textContent = `Faixa justa: R$ ${fmt(totalMin)} – R$ ${fmt(totalMax)}`;
+  $('totalRange').textContent = (horarioEspecial || volumeGrande)
+    ? 'Pode variar conforme confirmação de Gustavo'
+    : '';
 
   let bd = `
-    <div class="bd-row"><span>Taxa base</span><b>R$ ${fmt(TAXA_BASE)}</b></div>
-    <div class="bd-row sub"><span>${distTotal.toFixed(1)} km</span><b>R$ ${fmt(kmValor)}</b></div>
-    <div class="bd-row sub"><span>Tempo de espera incluso</span><b>R$ ${fmt(esperaValor)}</b></div>
-    <div class="bd-row"><span>Subtotal</span><b>R$ ${fmt(subtotal)}</b></div>
+    <div class="bd-row"><span>${tipoServico === 'motoTaxi' ? 'Moto Táxi' : 'Motoboy'} · ${distTotal.toFixed(1)} km ${idaVolta ? '(ida e volta)' : '(só ida)'}</span><b>R$ ${fmt(base)}</b></div>
   `;
-  activeLabels.forEach(a=>{
-    bd += `<div class="bd-row mult"><span>${a.name}</span><b>+${a.pct}%</b></div>`;
-  });
-  if(pedagio>0){
-    bd += `<div class="bd-row"><span>Pedágio/estacionamento</span><b>R$ ${fmt(pedagio)}</b></div>`;
+  if(esperaValor > 0){
+    bd += `<div class="bd-row sub"><span>Espera (${esperaMin} min)</span><b>R$ ${fmt(esperaValor)}</b></div>`;
+  }
+  if(pedagio > 0){
+    bd += `<div class="bd-row sub"><span>Pedágio/estacionamento</span><b>R$ ${fmt(pedagio)}</b></div>`;
+  }
+  if(horarioEspecial){
+    bd += `<div class="bd-row sub"><span>Horário noturno/domingo/feriado</span><b>a confirmar</b></div>`;
+  }
+  if(volumeGrande){
+    bd += `<div class="bd-row sub"><span>Volume grande/especial</span><b>a confirmar</b></div>`;
   }
   $('breakdown').innerHTML = bd;
 
-  // mensagem pro Gustavo
-  const destino = $('destino').value.trim() || '(destino a definir)';
+  // mensagem pro whatsapp
   const nome = $('nome').value.trim();
-  let motivo = idaVolta ? 'ida e volta' : 'só ida';
-  let extras = activeLabels.map(a=>a.name.toLowerCase()).join(', ');
-  const isTaxi = tipoServico === 'motoTaxi';
+  const origem = $('origem').value.trim();
+  const destino = $('destino').value.trim();
+  let msg = `Olá Gustavo! ${nome ? 'Meu nome é ' + nome + '. ' : ''}Gostaria de um orçamento:\n`;
+  msg += `Serviço: ${tipoServico === 'motoTaxi' ? 'Moto Táxi' : 'Motoboy'}\n`;
+  if(origem) msg += `Origem: ${origem}\n`;
+  if(destino) msg += `Destino: ${destino}\n`;
+  msg += `Distância: ${distIda} km (${idaVolta ? 'ida e volta' : 'só ida'})\n`;
+  if(esperaMin > 0) msg += `Espera estimada: ${esperaMin} min\n`;
+  if(pedagio > 0) msg += `Pedágio/estacionamento: R$ ${fmt(pedagio)}\n`;
+  if(horarioEspecial) msg += `Obs: horário noturno/domingo/feriado\n`;
+  if(volumeGrande) msg += `Obs: volume grande/pesado/especial\n`;
+  msg += `Valor estimado pela tabela: R$ ${fmt(total)}\n`;
+  msg += `Pode confirmar o valor final?`;
 
-  let msg = `Olá Gustavo! ${nome ? 'Meu nome é ' + nome + '. ' : ''}`;
-  msg += isTaxi
-    ? `Gostaria de uma corrida de passageiro de Cesário Lange até ${destino}, ${distIda || '?'} km (${motivo}).`
-    : `Gostaria de solicitar uma entrega de Cesário Lange até ${destino}, ${distIda || '?'} km (${motivo}).`;
-  if(extras) msg += ` Opções: ${extras}.`;
-  if(pedagio>0) msg += ` Tem pedágio/estacionamento de aproximadamente R$ ${fmt(pedagio)}.`;
-  msg += ` Valor estimado: R$ ${fmt(total)} (faixa R$ ${fmt(totalMin)} – R$ ${fmt(totalMax)}). Pode confirmar?`;
-  $('msgBox').textContent = msg;
-
-  last = { total, msg };
+  $('waBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
-
-$('copyBtn').addEventListener('click', ()=>{
-  navigator.clipboard.writeText($('msgBox').textContent).then(()=>{
-    const btn = $('copyBtn');
-    const original = btn.textContent;
-    btn.textContent = 'Copiado ✓';
-    btn.classList.add('copied');
-    setTimeout(()=>{ btn.textContent = original; btn.classList.remove('copied'); }, 1800);
-  });
-});
-
-$('whatsBtn').addEventListener('click', ()=>{
-  const texto = encodeURIComponent($('msgBox').textContent);
-  window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${texto}`, '_blank');
-});
 
 calc();
 </script>
